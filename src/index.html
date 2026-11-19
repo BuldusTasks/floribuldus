@@ -2,12 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>FloriBuldusArt</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="FBArt.png">
+  <link rel="icon" type="image/png" href="FBArt.png">
+  <link rel="apple-touch-icon" href="FBArt.png">
+  <meta name="author" content="Flori Bulduș">
+  <meta name="theme-color" content="#000000">
+  <script>
+    // Old links used hash URLs (https://floribuldus.ro/#/artwork/Icar).
+    // Rewrite them to the new crawlable path URLs before Angular starts.
+    if (location.hash.indexOf('#/') === 0) {
+      history.replaceState(null, '', location.hash.slice(1));
+    }
+    // With JavaScript on, the Angular app renders the page; the static copy
+    // below is only for crawlers / AI bots that don't run JavaScript.
+    document.documentElement.className += ' js';
+  </script>
+  <style>.js .seo-static{display:none}.seo-static{color:#eee;padding:1rem;max-width:60rem;margin:auto}.seo-static h1,.seo-static h2{color:#fff}.seo-static a{color:#9cf}.seo-static img{max-width:100%;height:auto}</style>
+  <!--seo-head-->
+  <!-- Replaced per page at build time by scripts/generate-seo-pages.mjs -->
+  <title>Flori Bulduș – Romanian Abstract Painter, Cluj-Napoca | Official Website</title>
+  <meta name="description" content="Flori Bulduș (b. 1956) is a Romanian visual artist from Cluj-Napoca. Abstract and mixed-media paintings exploring symbols – the Spiral, the Circle, Fire, Water, the Pearl. Gallery, exhibitions and contact.">
+  <link rel="canonical" href="https://floribuldus.ro/">
+  <!--/seo-head-->
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <!--seo-body-->
+    <div class="seo-static">
+      <h1>Flori Bulduș</h1>
+      <p>Romanian visual artist (b. 1956, Mociu, Cluj County) who lives and works in Cluj-Napoca. Abstract and mixed-media painting.</p>
+    </div>
+    <!--/seo-body-->
+  </app-root>
 </body>
 </html>

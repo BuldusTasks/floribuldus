@@ -10,6 +10,7 @@ import {
 import { ArtworkService } from '../services/artwork.service';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { slugify } from '../seo/seo.service';
 
 @Component({
   selector: 'app-gallery',
@@ -19,11 +20,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent implements AfterViewInit {
-  artworks = [
-    { folder: 'art1', images: ['1.jpg'], title: 'Art 1' },
-    { folder: 'art2', images: ['2.jpg'], title: 'Art 2' },
-    { folder: 'art3', images: ['3.jpg'], title: 'Art 3' }
-  ];
+  artworks: any[] = [];
   activeIndex = 0;
   isHoveringMainImage = false;
   showTitle = false;
@@ -113,7 +110,13 @@ export class GalleryComponent implements AfterViewInit {
     this.isHoveringMainImage = false;
   }
 
+  altText(artwork: any): string {
+    const en = artwork.info?.title;
+    const name = en && en !== artwork.title ? `${artwork.title} (${en})` : artwork.title;
+    return `${name} – painting by Flori Bulduș`;
+  }
+
   goToArtworkDetail(folder: string) {
-    this.router.navigate(['/artwork', folder]);
+    this.router.navigate(['/artwork', slugify(folder)]);
   }
 }

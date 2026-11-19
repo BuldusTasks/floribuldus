@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AudioService } from '../audio-service/audio-service.component';
+import { SeoService } from '../seo/seo.service';
 
 declare var bootstrap: any;
 
@@ -52,7 +53,8 @@ export class ExhibitionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    public audioService: AudioService
+    public audioService: AudioService,
+    private seo: SeoService
   ) {}
 
   ngOnInit() {
@@ -69,6 +71,13 @@ export class ExhibitionComponent implements OnInit {
       .subscribe(data => {
 
         this.exhibition = data;
+
+        this.seo.setPage({
+          title: `${data.title} – Exhibition by Flori Bulduș`,
+          description: `"${data.title}", an exhibition by Romanian visual artist Flori Bulduș. Listen to the artist talk about the inspiration and story behind the works (English and Romanian audio).`,
+          path: `/exhibitions/${id}/`,
+          image: this.image(data.exhibitionCover)
+        });
 
         const file = this.exhibition.audio?.[this.selectedLang];
 

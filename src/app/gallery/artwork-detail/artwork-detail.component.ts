@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArtworkService } from '../../services/artwork.service';
 import { CommonModule } from '@angular/common';
+import { SeoService, slugify } from '../../seo/seo.service';
 
 declare var bootstrap: any;
 
@@ -20,7 +21,9 @@ export class ArtworkDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private artworkService: ArtworkService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private seo: SeoService
   ) {
     this.folder = this.route.snapshot.paramMap.get('folder');
   }
@@ -29,12 +32,53 @@ export class ArtworkDetailComponent {
     this.artworkService.getArtworks().subscribe((data) => {
       const allArtworks = data;
       if (this.folder) {
-        const filtered = allArtworks.filter(art => art.title === this.folder);
+        // Accept both the slug (/artwork/esenta-vietii) and the legacy folder name
+        // (/artwork/Esența vieții) used by the old hash URLs.
+        const param = this.folder;
+        const filtered = allArtworks.filter(
+          art => slugify(art.folder) === slugify(param) || art.title === param
+        );
         this.artworks = filtered.length > 0 ? filtered : [];
+        const art = this.artworks[0];
+        if (art) {
+          const slug = slugify(art.folder);
+          if (param !== slug) {
+            this.router.navigate(['/artwork', slug], { replaceUrl: true });
+          }
+          this.updateSeo(art, slug);
+        }
       } else {
         this.artworks = allArtworks;
       }
       this.cdr.detectChanges();
+    });
+  }
+
+  altText(index: number): string {
+    const art = this.artworks[0];
+    if (!art) return 'Painting by Flori Bulduș';
+    const name = art.info?.title && art.info.title !== art.title
+      ? `${art.title} (${art.info.title})`
+      : art.title;
+    return index === 0
+      ? `${name} – painting by Flori Bulduș`
+      : `${name} – detail ${index}, painting by Flori Bulduș`;
+  }
+
+  private updateSeo(art: any, slug: string) {
+    const en = art.info?.title;
+    const name = en && en !== art.title ? `${art.title} (${en})` : art.title;
+    const extra = art.info?.additional_info;
+    const facts = [extra?.technique, extra?.dimensions].filter(Boolean).join(', ');
+    const text = (art.info?.description ?? '').replace(/\s+/g, ' ').trim();
+    const description = (
+      `${name} by Romanian artist Flori Bulduș${facts ? ` – ${facts}` : ''}. ${text}`
+    ).slice(0, 300);
+    this.seo.setPage({
+      title: `${name} – Painting by Flori Bulduș`,
+      description,
+      path: `/artwork/${slug}/`,
+      image: `assets/paintings/${art.folder}/${art.images[0]}`
     });
   }
 

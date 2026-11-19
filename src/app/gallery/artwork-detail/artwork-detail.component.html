@@ -30,7 +30,7 @@
             class="d-block w-100 h-100"
             loading="eager"
             [src]="'assets/paintings/' + artworks[0].folder + '/' + artworkimage"
-            alt="Artwork"
+            [alt]="altText(i)"
             style="object-fit: contain; cursor: zoom-in;"
             (click)="showFullImage('assets/paintings/' + artworks[0].folder + '/' + artworkimage)">
         </div>
@@ -63,7 +63,7 @@
         <img
           [src]="fullImageUrl"
           class="img-fluid"
-          alt="Full View"
+          [alt]="altText(0)"
           style="max-height: 90vh; object-fit: contain; margin: auto;" />
       </div>
     </div>
