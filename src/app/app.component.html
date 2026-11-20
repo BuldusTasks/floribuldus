@@ -6,7 +6,8 @@
 
     <!-- BRAND -->
     <a class="navbar-brand"
-       [routerLink]="['/home']"
+       title="Flori Bulduș – visual artist"
+       [routerLink]="['/']"
        [queryParams]="{ scrollTo: 'gallery' }"
        style="color: white !important">
       Flori Bulduș
@@ -15,6 +16,7 @@
     <!-- MOBILE TOGGLER -->
     <button class="navbar-toggler bg-light"
             type="button"
+            aria-label="Toggle navigation"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -28,9 +30,10 @@
         <!-- GALLERY -->
         <li class="nav-item mx-3">
           <a class="nav-link"
-             [routerLink]="['/home']"
+             [routerLink]="['/']"
              [queryParams]="{ scrollTo: 'gallery' }"
              routerLinkActive="active"
+             [routerLinkActiveOptions]="{ paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' }"
              (click)="forceScroll('gallery')">
             Gallery
           </a>
@@ -39,9 +42,10 @@
         <!-- ABOUT -->
         <li class="nav-item mx-3">
           <a class="nav-link"
-             [routerLink]="['/home']"
+             [routerLink]="['/']"
              [queryParams]="{ scrollTo: 'about' }"
              routerLinkActive="active"
+             [routerLinkActiveOptions]="{ paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' }"
              (click)="forceScroll('about')">
             About
           </a>
@@ -50,9 +54,10 @@
         <!-- CONTACT -->
         <li class="nav-item mx-3">
           <a class="nav-link"
-             [routerLink]="['/home']"
+             [routerLink]="['/']"
              [queryParams]="{ scrollTo: 'contact' }"
              routerLinkActive="active"
+             [routerLinkActiveOptions]="{ paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' }"
              (click)="forceScroll('contact')">
             Contact
           </a>

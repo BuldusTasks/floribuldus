@@ -6,7 +6,9 @@
     "start": "ng serve FloriBuldusArt",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:site": "ng build --output-path=dist && node scripts/generate-seo-pages.mjs dist/browser",
+    "deploy": "npm run build:site && npx angular-cli-ghpages --dir=dist/browser --cname=floribuldus.ro"
   },
   "private": true,
   "dependencies": {

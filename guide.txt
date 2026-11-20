@@ -17,8 +17,14 @@ to add a new exhibition go
 git add .
 git commit -m "fi"
 git push origin main
-npx ng build --output-path=dist
-npx angular-cli-ghpages --dir=dist/browser --cname=floribuldus.ro
+npm run deploy
+
+  (this runs: ng build --output-path=dist
+              node scripts/generate-seo-pages.mjs dist/browser   <- SEO pages, sitemap.xml, llms.txt
+              npx angular-cli-ghpages --dir=dist/browser --cname=floribuldus.ro)
+
+- SEO: artist facts (bio, social profiles "sameAs", photo) are at the top of
+  scripts/generate-seo-pages.mjs. Add every new official profile link there.
 
 
 

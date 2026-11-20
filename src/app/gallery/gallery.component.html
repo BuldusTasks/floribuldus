@@ -1,5 +1,5 @@
 <div class="gallery-wrapper position-relative">
-  <button class="arrow left" (click)="scrollGallery('left')">&#8592;</button>
+  <button class="arrow left" aria-label="Previous painting" (click)="scrollGallery('left')">&#8592;</button>
   <div class="scroll-container" #scrollContainer>
     <!-- Prepend last image -->
     <img
@@ -9,7 +9,7 @@
       [class.active]="activeIndex === -1"
       [ngClass]="activeIndex !== -1 ? 'image-overlay' : 'main-image'"
       [src]="'assets/paintings/' + artworks[artworks.length - 1].folder + '/' + artworks[artworks.length - 1].images[0]"
-      alt="Artwork"
+      [alt]="altText(artworks[artworks.length - 1])"
     />
     <!-- Main images -->
     <img
@@ -19,7 +19,7 @@
       [class.active]="i === activeIndex"
       [ngClass]="activeIndex !== i ? 'image-overlay' : 'main-image'"
       [src]="'assets/paintings/' + artwork.folder + '/' + artwork.images[0]"
-      alt="Artwork"
+      [alt]="altText(artwork)"
       (mouseenter)="onHoverMainImage(i)"
       (mouseleave)="onLeaveMainImage()"
       (click)="goToArtworkDetail(artwork.folder)"
@@ -32,14 +32,14 @@
       [class.active]="activeIndex === artworks.length"
       [ngClass]="activeIndex !== artworks.length ? 'image-overlay' : 'main-image'"
       [src]="'assets/paintings/' + artworks[0].folder + '/' + artworks[0].images[0]"
-      alt="Artwork"
+      [alt]="altText(artworks[0])"
     />
     <p
       class="centered-title"
       [class.visible]="isHoveringMainImage && showTitle"
     >
-      {{ artworks[activeIndex].title }}
+      {{ artworks[activeIndex]?.title }}
     </p>
   </div>
-  <button class="arrow right" (click)="scrollGallery('right')">&#8594;</button>
+  <button class="arrow right" aria-label="Next painting" (click)="scrollGallery('right')">&#8594;</button>
 </div>

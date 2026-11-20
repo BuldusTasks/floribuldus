@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GalleryComponent } from "../gallery/gallery.component";
 import { AboutComponent } from "../about/about.component";
 import { ContactComponent } from "../contact/contact.component";
+import { SeoService } from '../seo/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   private eventListener!: (event: any) => void;
 
   ngOnInit(): void {
+    this.seo.setPage({
+      title: 'Flori Bulduș – Romanian Abstract Painter, Cluj-Napoca | Official Website',
+      description: 'Flori Bulduș (b. 1956) is a Romanian visual artist from Cluj-Napoca. Abstract and mixed-media paintings exploring symbols – the Spiral, the Circle, Fire, Water, the Pearl. Gallery, exhibitions and contact.',
+      path: '/'
+    });
+
     // Scroll on initial route load
     this.route.queryParams.subscribe(params => {
       const section = params['scrollTo'];
@@ -54,5 +61,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private seo: SeoService) {}
 }

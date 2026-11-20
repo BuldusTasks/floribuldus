@@ -1,0 +1,5 @@
+# All search engines and AI crawlers are welcome (Google, Bing, ChatGPT, Claude, Perplexity, ...)
+User-agent: *
+Allow: /
+
+Sitemap: https://floribuldus.ro/sitemap.xml
